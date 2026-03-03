@@ -28,5 +28,13 @@ form.addEventListener('submit', async(e) => {
 });
 
  function addTaskToUl(task) {
-    
+    const li = document.createElement('li');
+    li.className = task.completed ? "completed" : "";
+    li.innerHTML = `
+    <span>${task.title} - ${task.description}</span>
+    <div>
+    <button onclick="toggleComplete(${task.completed})">✔️</button>
+    <button onclick="deleteTask(${task.id})">🗑️</button>
+    </div>
+    `;
  }
