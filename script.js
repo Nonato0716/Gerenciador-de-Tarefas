@@ -37,4 +37,18 @@ form.addEventListener('submit', async(e) => {
     <button onclick="deleteTask(${task.id})">🗑️</button>
     </div>
     `;
+    taskList.appendChild(li);
  }
+
+async function loadTasks() {
+    try {
+       const res = await fetch(apiUrl);
+       if(!res.ok) throw new Error('Erro ao carregar tarefas');
+       const tasks = await res.json();
+       taskList.innerHTML = "";
+       tasks.forEach(addTaskToUl);
+       
+    } catch (err) {
+        alert("Erro ao carregar tarefas: " + err.message);
+    }
+}
