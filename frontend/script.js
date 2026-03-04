@@ -33,8 +33,8 @@ form.addEventListener('submit', async(e) => {
     li.innerHTML = `
     <span>${task.title} - ${task.description}</span>
     <div>
-    <button onclick="toggleComplete(${task.completed})">✔️</button>
-    <button onclick="deleteTask(${task.id})">🗑️</button>
+    <button class="li-button" onclick="toggleComplete(${task.completed})">✔️</button>
+    <button class="li-button" onclick="deleteTask(${task.id})">🗑️</button>
     </div>
     `;
     taskList.appendChild(li);
@@ -52,3 +52,32 @@ async function loadTasks() {
         alert("Erro ao carregar tarefas: " + err.message);
     }
 }
+
+async function toggleComplete(id, completed) {
+    try {
+        await fetch(`${apiUrl}/${id}`, {
+            method: "PUT",
+            headers: {"Content-Type": "aplication/json"},
+            body: JSON.stringify({completed: !completed})
+        })
+
+        loadTasks();
+
+    } catch (err) {
+        alert(`Erro ao atualizar tarefa: ${err.message}`)
+    }
+}
+
+async function deleteTask(id) {
+    try {
+        await fetch(`${apiUrl}/${id}`, {
+            method: "DELETE"
+        })
+
+        loadTasks();
+    } catch (err) {
+        alert(`Erro ao excluir tarefa: ${err.message}`)
+    }
+}
+
+loadTasks();
