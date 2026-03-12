@@ -12,7 +12,7 @@ form.addEventListener('submit', async(e) => {
     try{
         const res = await fetch(apiUrl, {
             method: 'POST', 
-            headers: {"content-type":"aplication/json"},
+            headers: {"content-type":"application/json"},
             body: JSON.stringify({ title, description })
         });
 
@@ -33,7 +33,7 @@ form.addEventListener('submit', async(e) => {
     li.innerHTML = `
     <span>${task.title} - ${task.description}</span>
     <div>
-    <button class="li-button" onclick="toggleComplete(${task.completed})">✔️</button>
+    <button class="li-button" onclick="toggleComplete(${task.id},${task.completed})">✔️</button>
     <button class="li-button" onclick="deleteTask(${task.id})">🗑️</button>
     </div>
     `;
@@ -57,7 +57,7 @@ async function toggleComplete(id, completed) {
     try {
         await fetch(`${apiUrl}/${id}`, {
             method: "PUT",
-            headers: {"Content-Type": "aplication/json"},
+            headers: {"Content-Type": "application/json"},
             body: JSON.stringify({completed: !completed})
         })
 

@@ -20,8 +20,8 @@ function readTasks() {
     return JSON.parse(fs.readFileSync(FILE_PATH));
 };
 
-function writeTasks(task) {
-    fs.writeFileSync(FILE_PATH, JSON.stringify(TaskSignal, null, 2));
+function writeTasks(task) { 
+    fs.writeFileSync(FILE_PATH, JSON.stringify(task, null, 2));
 }
 
 // Definição de rotas da API(Endpoints)
@@ -41,6 +41,7 @@ app.get("/tasks/id", (req, res) => {
 // POST /tasks (Criar uma nova tafera)
 app.post("/tasks", (req, res) => {
     const tasks = readTasks();
+
     const newTask = {
         id: Date.now(),
         title: req.body.title, 
@@ -60,8 +61,8 @@ app.put("/tasks/:id", (req, res) => {
 
     tasks[taskIndex] = { ...tasks[taskIndex], ...req.body };
 
-writeTasks(tasks);
-res.json(tasks[taskIndex]);
+    writeTasks(tasks);
+    res.json(tasks[taskIndex]);
 })
 
 // DELETE /tasks/:id (Excluir uma tafera)
